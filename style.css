@@ -88,8 +88,7 @@ textarea:focus { border-color: var(--green); background: #fffdf9; }
   .composer { padding: 35px 0 44px; }
   .result-heading-row { align-items: flex-start; flex-direction: column; gap: 16px; }
   .result-actions { width: 100%; justify-content: space-between; }
-  .result-frame { padding: 30px 12px; }
+  .result-frame { --grid-unit: 28px; padding: 30px 12px; }
   .composition { gap: 0; }
-  .composition-row { --grid-unit: 28px; }
   .footer { flex-direction: column; gap: 7px; }
 }
