@@ -5,6 +5,7 @@ const state = {
   lastSelections: new Map(),
   lastSampleIndex: -1,
   animationTimer: null,
+  revealTimer: null,
 };
 
 const samples = [
@@ -120,11 +121,12 @@ function showError(message, failures = []) {
   errorBox.hidden = false;
 }
 
-function render() {
+function render(visibleCount = state.rows.length) {
   const targetColumn = 3;
   composition.innerHTML = '';
+  composition.style.setProperty('--grid-rows', state.rows.length);
 
-  state.rows.forEach((row) => {
+  state.rows.slice(0, visibleCount).forEach((row) => {
     const rowElement = document.createElement('div');
     rowElement.className = 'composition-row';
     rowElement.style.paddingLeft = `${row.plain ? targetColumn : targetColumn - row.candidates[row.selectedIndex].position}em`;
@@ -170,8 +172,12 @@ function render() {
   resultCaption.hidden = false;
 }
 
-function generate(forceDifferent = false) {
+function generate(forceDifferent = false, reveal = true) {
   const text = sourceText.value;
+  if (state.revealTimer) {
+    clearInterval(state.revealTimer);
+    state.revealTimer = null;
+  }
   showError('');
   if (!text) {
     state.rows = [];
@@ -192,7 +198,20 @@ function generate(forceDifferent = false) {
     return;
   }
   state.rows = result.rows;
-  render();
+  if (!reveal) {
+    render();
+    return;
+  }
+  let visibleCount = 0;
+  render(visibleCount);
+  state.revealTimer = setInterval(() => {
+    visibleCount += 1;
+    render(visibleCount);
+    if (visibleCount >= state.rows.length) {
+      clearInterval(state.revealTimer);
+      state.revealTimer = null;
+    }
+  }, 100);
 }
 
 composition.addEventListener('click', (event) => {
@@ -202,6 +221,10 @@ composition.addEventListener('click', (event) => {
   const row = state.rows[rowIndex];
   row.selectedIndex = (row.selectedIndex + 1) % row.candidates.length;
   state.lastSelections.set(rowIndex, row.selectedIndex);
+  if (state.revealTimer) {
+    clearInterval(state.revealTimer);
+    state.revealTimer = null;
+  }
   render();
 });
 
@@ -216,7 +239,7 @@ animationButton.addEventListener('click', () => {
     animationButton.textContent = 'アニメーション';
     return;
   }
-  state.animationTimer = setInterval(() => generate(true), 100);
+  state.animationTimer = setInterval(() => generate(true, false), 100);
   animationButton.setAttribute('aria-pressed', 'true');
   animationButton.textContent = '停止する';
 });

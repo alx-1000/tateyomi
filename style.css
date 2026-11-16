@@ -61,9 +61,9 @@ textarea:focus { border-color: var(--green); background: #fffdf9; }
 .empty-state { display: grid; place-items: center; min-height: 250px; color: var(--muted); text-align: center; }
 .empty-mark { display: block; margin-bottom: 16px; color: var(--line); font-size: 58px; line-height: 1; }
 .empty-state p { margin: 0; font-size: 13px; }
-.composition { display: flex; flex-direction: column; align-items: center; gap: 0; min-height: 250px; padding: 0; }
+.composition { display: flex; flex-direction: column; align-items: center; gap: 0; width: calc(var(--grid-unit) * 7); min-height: 250px; margin: 0 auto; padding: 0; }
+.result-frame.grid-paper .composition { min-height: calc(var(--grid-unit) * var(--grid-rows)); height: calc(var(--grid-unit) * var(--grid-rows)); background-image: linear-gradient(rgba(55,100,90,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(55,100,90,.2) 1px, transparent 1px); background-size: var(--grid-unit) var(--grid-unit); outline: 1px solid rgba(55,100,90,.28); outline-offset: -1px; }
 .composition-row { display: grid; grid-template-columns: repeat(4, 1em); grid-auto-rows: 1em; justify-content: start; width: 7em; color: var(--ink); font-size: var(--grid-unit); line-height: 1; }
-.result-frame.grid-paper .composition-row { background-image: linear-gradient(rgba(55,100,90,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(55,100,90,.2) 1px, transparent 1px); background-size: var(--grid-unit) var(--grid-unit); outline: 1px solid rgba(55,100,90,.28); outline-offset: -1px; }
 .idiom-button { display: contents; }
 .idiom-button .idiom-glyph { display: grid; place-items: center; width: 1em; height: 1em; border-bottom: 1px solid transparent; transition: color .18s, background .18s; }
 .idiom-button:hover .idiom-glyph, .idiom-button:focus-visible .idiom-glyph { color: var(--accent); background: var(--accent-soft); }
