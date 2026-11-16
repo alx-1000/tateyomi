@@ -16,7 +16,8 @@ const samples = [
 "我思う故に我あり", 
 "少年老い易く学成り難し",
 "月落烏啼霜満天",
-"紀貫之"
+"紀貫之",
+"一大三千大千世界"
 ];
 
 const sourceText = document.querySelector('#source-text');
