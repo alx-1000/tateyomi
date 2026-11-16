@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <title>四字熟語縦読みジェネレーター</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <p class="eyebrow">TYPOGRAPHIC RECOMPOSITION / 01</p>
+      <h1>四字熟語<span>縦読み</span>生成</h1>
+    </header>
+
+    <section class="composer" aria-labelledby="input-heading">
+      <div class="section-label">
+        <span class="section-number">01</span>
+      </div>
+      <div class="input-row">
+        <label class="sr-only" for="source-text">変換する文章</label>
+        <textarea id="source-text" rows="3" maxlength="120" placeholder="変換する文章を入力">国破れて山河あり</textarea>
+        <div class="input-meta"><span id="char-count">0</span> / 120 文字</div>
+      </div>
+      <div class="actions">
+        <button class="button button-primary" id="generate-button" type="button"><span>生成する</span><span aria-hidden="true">↗</span></button>
+        <button class="text-button" id="sample-button" type="button">サンプルを入れる</button>
+      </div>
+      <p class="notice notice-warning" id="long-text-notice" hidden>長い文章は、縦にスクロールしてお楽しみください。</p>
+      <div class="error-box" id="error-box" role="alert" hidden></div>
+    </section>
+
+    <section class="result-section" aria-labelledby="result-heading">
+      <div class="result-heading-row">
+        <div class="section-label">
+          <span class="section-number">02</span>
+          <h2 id="result-heading">再構成された文章</h2>
+        </div>
+        <div class="result-actions" id="result-actions" hidden>
+          <button class="icon-button" id="png-button" type="button" title="PNG画像として保存" aria-label="PNG画像として保存">↓<span>PNG</span></button>
+          <button class="text-button" id="regenerate-button" type="button">全体を再生成</button>
+          <button class="text-button" id="animation-button" type="button" aria-pressed="false">アニメーション</button>
+          <button class="grid-toggle" id="grid-toggle" type="button" aria-pressed="false">
+            <span class="toggle-track" aria-hidden="true"><span></span></span>
+            <span>原稿用紙の格子</span>
+          </button>
+        </div>
+      </div>
+      <div class="result-frame" id="result-frame">
+        <div class="empty-state" id="empty-state">
+          <span class="empty-mark">縦</span>
+          <p>文章を入力すると、ここに四字熟語が現れます。</p>
+        </div>
+        <div class="composition" id="composition" hidden></div>
+      </div>
+      <p class="result-caption" id="result-caption" hidden>四字熟語をクリックすると、同じ文字を含む別の候補に切り替わります。</p>
+    </section>
+
+    <footer class="footer">
+      <span>LOCAL IDIOM DICTIONARY</span>
+      <details class="credits">
+        <summary>Credits</summary>
+        <p><strong>Dictionary data:</strong> yojijukugo-db by faanau</p>
+        <p><a href="https://github.com/faanau/yojijukugo-db" target="_blank" rel="noreferrer">Source repository</a> / JMdict・KANJIDIC2 / EDRDG</p>
+        <p>CC BY-SA 4.0 / <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">License</a></p>
+        <p>アプリ用に必要項目のみ抽出・再構成しています。</p>
+      </details>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
