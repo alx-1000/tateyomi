@@ -46,15 +46,6 @@ function isKanji(character) {
   return /[一-龯々〆ヵヶ]/u.test(character);
 }
 
-function expandOdoriji(text) {
-  const characters = [...text];
-  const expanded = [];
-  characters.forEach((character, index) => {
-    expanded.push(character === '々' && index > 0 ? expanded[index - 1] : character);
-  });
-  return expanded.join('');
-}
-
 function isKanjiIdiomForm(text) {
   return /^[一-龯々〆ヵヶ]{4}$/u.test(text);
 }
@@ -75,10 +66,7 @@ function buildSearchIndex() {
     const forms = [...new Set([idiomText(entry), ...(entry.variants || [])])]
       .filter(isKanjiIdiomForm);
     forms.forEach((displayText) => {
-      const searchableCharacters = [...expandOdoriji(displayText)].map((character, position) => ({ character, position }));
-      [...displayText].forEach((character, position) => {
-        if (character === '々') searchableCharacters.push({ character, position });
-      });
+      const searchableCharacters = [...displayText].map((character, position) => ({ character, position }));
       searchableCharacters.forEach(({ character, position }) => {
         const key = `${entry.id || idiomText(entry)}|${displayText}|${character}|${position}`;
         if (seen.has(key)) return;
@@ -153,7 +141,7 @@ function render() {
     }
 
     const selected = row.candidates[row.selectedIndex];
-    [...expandOdoriji(selected.displayText)].forEach((character, position) => {
+    [...selected.displayText].forEach((character, position) => {
       const button = document.createElement('button');
       button.className = `idiom-button${position === selected.position ? ' target-glyph' : ''}`;
       button.type = 'button';
@@ -280,7 +268,7 @@ document.querySelector('#png-button').addEventListener('click', () => {
     }
     const selected = row.candidates[row.selectedIndex];
     const startX = axis - (selected.position * 44);
-    [...expandOdoriji(selected.displayText)].forEach((character, position) => {
+    [...selected.displayText].forEach((character, position) => {
       context.fillStyle = position === selected.position ? '#d65b3f' : '#1d2725';
       context.font = '32px serif';
       context.fillText(character, startX + position * 44, y);
